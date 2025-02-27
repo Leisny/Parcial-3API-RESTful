@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/productos")
-public class ProductoController {
+public class ProductoControllerTest {
 
     @GetMapping
     public Flux<Producto> listarProductos() {
