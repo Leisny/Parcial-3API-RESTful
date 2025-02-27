@@ -1,22 +1,27 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
-
-
-@RestController
-@RequestMapping("/api/productos")
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ProductoControllerTest {
 
-    @GetMapping
-    public Flux<Producto> listarProductos() {
-        return Flux.just(
-                new Producto("1", "Laptop", 1200.0),
-                new Producto("2", "Mouse", 25.0),
-                new Producto("3", "Teclado", 45.0)
-        );
+    @Autowired
+    private ProductoController productoController;
+
+    @Test
+    public void testListaProductos() {
+        Flux<Producto> productos = productoController.listarProductos();
+
+        StepVerifier.create(productos)
+                .expectNextMatches(p -> p.getNombre().equals("Laptop"))
+                .expectNextMatches(p -> p.getNombre().equals("Mouse"))
+                .expectNextMatches(p -> p.getNombre().equals("Teclado"))
+                .verifyComplete();
     }
 }

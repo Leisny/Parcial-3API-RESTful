@@ -15,10 +15,9 @@ public class ProductoController {
     @GetMapping
     public Flux<Producto> listarProductos() {
         return Flux.just(
+                new Producto("1", "Laptop", 1200.0),
                 new Producto("2", "Mouse", 25.0),
-                new Producto("3", "Teclado", 45.0),
-                new Producto("1", "Laptop", 1200.0)
-
+                new Producto("3", "Teclado", 45.0)
         );
     }
 }
